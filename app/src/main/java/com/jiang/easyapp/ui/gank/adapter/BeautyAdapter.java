@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.jiang.easyapp.R;
 import com.jiang.easyapp.model.gank.BeautyResult;
+import com.jiang.easyapp.util.ImageUtil;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         BeautyResult result = mResults.get(position);
         String img_url = result.getUrl();
-        Glide.with(holder.itemView.getContext()).load(img_url).into(holder.img_beauty);
+        ImageUtil.load(holder.itemView.getContext(),img_url,holder.img_beauty);
     }
 
     @Override

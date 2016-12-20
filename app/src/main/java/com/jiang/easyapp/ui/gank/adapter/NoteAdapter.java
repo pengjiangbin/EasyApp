@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.jiang.easyapp.R;
 import com.jiang.easyapp.model.gank.NotesResult;
+import com.jiang.easyapp.util.ImageUtil;
 
 import java.util.List;
 
@@ -34,12 +34,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         NotesResult result = mResults.get(position);
-        String img_url=result.getImages()!=null&&result.getImages().size()>0?result.getImages().get(0):null;
+        String img_url = result.getImages() != null && result.getImages().size() > 0 ? result.getImages().get(0) : null;
         holder.tv_content.setText(result.getDesc());
-        Glide.with(holder.itemView.getContext()).load(img_url).into(holder.icon);
+        ImageUtil.load(holder.itemView.getContext(), img_url, holder.icon);
         holder.source.setText(result.getWho());
-        String pushTime=result.getPublishedAt();
-        if(pushTime!=null&&pushTime.contains("T")){
+        String pushTime = result.getPublishedAt();
+        if (pushTime != null && pushTime.contains("T")) {
             holder.push_time.setText(pushTime.split("T")[0]);
         }
 
@@ -59,9 +59,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             tv_content = (TextView) itemView.findViewById(R.id.tv_content);
-            icon= (ImageView) itemView.findViewById(R.id.icon);
-            source= (TextView) itemView.findViewById(R.id.source);
-            push_time= (TextView) itemView.findViewById(R.id.time);
+            icon = (ImageView) itemView.findViewById(R.id.icon);
+            source = (TextView) itemView.findViewById(R.id.source);
+            push_time = (TextView) itemView.findViewById(R.id.time);
         }
     }
 }
