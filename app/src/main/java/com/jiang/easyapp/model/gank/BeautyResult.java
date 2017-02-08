@@ -1,12 +1,17 @@
 package com.jiang.easyapp.model.gank;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 /**
  * Created by jiang on 2016/12/20.
  */
 
-public class BeautyResult{
+public class BeautyResult implements Parcelable{
     @SerializedName("_id")
     private String id;
     private String createdAt;
@@ -18,6 +23,30 @@ public class BeautyResult{
     private String url;
     private boolean used;
     private String who;
+
+    protected BeautyResult(Parcel in) {
+        id = in.readString();
+        createdAt = in.readString();
+        desc = in.readString();
+        publishedAt = in.readString();
+        source = in.readString();
+        type = in.readString();
+        url = in.readString();
+        used = in.readByte() != 0;
+        who = in.readString();
+    }
+
+    public static final Creator<BeautyResult> CREATOR = new Creator<BeautyResult>() {
+        @Override
+        public BeautyResult createFromParcel(Parcel in) {
+            return new BeautyResult(in);
+        }
+
+        @Override
+        public BeautyResult[] newArray(int size) {
+            return new BeautyResult[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -91,4 +120,21 @@ public class BeautyResult{
         this.who = who;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(createdAt);
+        dest.writeString(desc);
+        dest.writeString(publishedAt);
+        dest.writeString(source);
+        dest.writeString(type);
+        dest.writeString(url);
+        dest.writeByte((byte) (used ? 1 : 0));
+        dest.writeString(who);
+    }
 }

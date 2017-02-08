@@ -18,6 +18,7 @@ import java.util.List;
 
 public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder> {
     private List<BeautyResult> mResults;
+    private OnClickListener mListener;
 
     public BeautyAdapter(List<BeautyResult> results) {
         mResults = results;
@@ -26,7 +27,13 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_beauty, parent, false);
-        ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.click(holder.getAdapterPosition());
+            }
+        });
         return holder;
     }
 
@@ -34,7 +41,7 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         BeautyResult result = mResults.get(position);
         String img_url = result.getUrl();
-        ImageUtil.load(holder.itemView.getContext(),img_url,holder.img_beauty);
+        ImageUtil.load(holder.itemView.getContext(), img_url, holder.img_beauty);
     }
 
     @Override
@@ -49,5 +56,13 @@ public class BeautyAdapter extends RecyclerView.Adapter<BeautyAdapter.ViewHolder
             super(itemView);
             img_beauty = (ImageView) itemView.findViewById(R.id.img_beauty);
         }
+    }
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnClickListener {
+        void click(int position);
     }
 }

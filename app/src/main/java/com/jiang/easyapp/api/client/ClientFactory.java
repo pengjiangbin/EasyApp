@@ -42,7 +42,6 @@ public class ClientFactory {
         return SingleHolder.INSTANCE;
     }
 
-
     public OkHttpClient getOkHttpClient() {
         mOkHttpClient = mBuilder.build();
         return mOkHttpClient;

@@ -11,7 +11,7 @@ import com.trello.rxlifecycle.components.support.RxFragment;
  * Created by jiang on 2016/12/20.
  */
 
-public abstract class BaseFragment extends RxFragment {
+public abstract class BaseFragment extends RxFragment implements IBaseFragment{
     protected boolean mIsViewInit;
     protected boolean mIsUserVisible;
     protected boolean mIsDataFetched;
@@ -34,9 +34,10 @@ public abstract class BaseFragment extends RxFragment {
         super.onActivityCreated(savedInstanceState);
         mIsViewInit = true;
         initData();
+        loadData();
     }
 
-    protected void initData() {
+    protected void loadData() {
         if (mIsViewInit && mIsUserVisible && !mIsDataFetched) {
             fetchData();
             mIsDataFetched = true;
@@ -47,7 +48,7 @@ public abstract class BaseFragment extends RxFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         mIsUserVisible = isVisibleToUser;
-        initData();
+        loadData();
     }
 
 
